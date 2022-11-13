@@ -1,34 +1,101 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [formValidation, setFormValidation] = useState({
+    email: undefined,
+    password: undefined,
+    passwordCheck: undefined,
+  });
+
+  const handleSumbit = (event) => {
+    event.preventDefault();
+
+    console.log("Send data to register");
+  };
+
+  const handleEmailChange = (event) => {
+    const value = event.target.value;
+
+    setFormValidation({
+      ...formValidation,
+      email: value.length === 0 ? "email is required" : "",
+    });
+
+    setEmail(value);
+  };
+
+  const handlePasswordChange = (event) => {
+    const value = event.target.value;
+
+    setFormValidation({
+      ...formValidation,
+      password: value.length < 5 ? "password is too short" : "",
+    });
+
+    setPassword(value);
+  };
+
+  const handlePasswordCheckChange = (event) => {
+    const value = event.target.value;
+
+    setFormValidation({
+      ...formValidation,
+      passwordCheck: value !== password ? "passwords do not match" : "",
+    });
+
+    setPasswordCheck(value);
+  };
+
+  const isFormValid = Object.keys(formValidation).every(
+    (key) => formValidation[key] === ""
+  );
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div>
+      <form onSubmit={handleSumbit}>
+        <div>
+          <label>Email</label>
+          <input
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="email"
+            type="email"
+          />
+          {formValidation.email && (
+            <span style={{ color: "red" }}>{formValidation.email}</span>
+          )}
+        </div>
+        <div>
+          <label>Password</label>
+          <input
+            value={password}
+            placeholder="password"
+            type="password"
+            onChange={handlePasswordChange}
+          />
+          {formValidation.password && (
+            <span style={{ color: "red" }}>{formValidation.password}</span>
+          )}
+        </div>
+        <div>
+          <label>Password Check</label>
+          <input
+            value={passwordCheck}
+            placeholder="password check"
+            type="password"
+            onChange={handlePasswordCheckChange}
+          />
+          {formValidation.passwordCheck && (
+            <span style={{ color: "red" }}>{formValidation.passwordCheck}</span>
+          )}
+        </div>
+        <button disabled={!isFormValid}>Sign Up</button>
+      </form>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
