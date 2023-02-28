@@ -23,9 +23,13 @@ export const MovieList = (props) => {
 
   useEffect(() => {
     const localStorageData = localStorage.getItem("favourites");
-    const storedFavourites = JSON.parse(localStorageData);
+    try{
+      const storedFavourites = JSON.parse(localStorageData);
 
-    setFavourites(storedFavourites);
+      setFavourites(storedFavourites);
+    }catch(err){
+      console.err("Error parsing favourite items from localStorage")
+    }
   }, []);
 
   return (
