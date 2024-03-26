@@ -4,7 +4,7 @@ import './App.css'
 import Header from './components/header'
 import { Ml } from './components/movieList'
 
-const movies = [{name: "Avatar"}, {name: "Star Wars"}, {name: "Asperus"}, ];
+const movies = [{name: "Avatar"}, {name: "Star Wars"}, {name: "Asperus"} ];
 
 function App() {
   return (

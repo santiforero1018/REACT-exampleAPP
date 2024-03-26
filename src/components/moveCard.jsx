@@ -1,15 +1,14 @@
 export function MoviCard(props) {
-    const {name, onCheckTime} = props;
+    const {name, onFavouriteClick, isFavourite} = props;
 
-    function handleClick(){
-        console.log("Time for the movie: "+ name );
-        onCheckTime(name);
-    }
+    const handleClick = () => {
+        onFavouriteClick(name);
+      };
 
     return <li>
         <article>
             <h3>{name}</h3>
-            <button onClick={handleClick}>Horarios</button>
+            <button onClick={handleClick}>{isFavourite ? "❤️" : "♡"}</button>
         </article>
     </li>
 }
