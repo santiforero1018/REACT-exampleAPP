@@ -1,37 +1,15 @@
-import { useEffect, useState } from "react";
 import { MoviCard } from "./moveCard"
+import { useFav } from "../hooks/useFav";
 
 export const Ml = (props) => {
 
     const { list } = props;
-    const [favourites, setFavourites] = useState([]); // el estado inicial es cuando no hay peliculas likeadas
+    const [favourites , addFav] = useFav();
 
-    // extraemos el estado actual para realizar cambios y despues que se vean reflejados
-    let copyFav = [...favourites];
-
-
-
-    const handleFavouriteClick = (movieName) => {
-        console.log("movie clicked as favourite: " + movieName);
-        if (!favourites.includes(movieName)) {
-            copyFav = [...favourites, movieName];
-        } else {
-            // filtra las peliculas dentro del arreglo
-            copyFav = copyFav.filter(movie => movieName != movie);
-        }
-
-        setFavourites(copyFav);
-
-        // guardar las peliculas likeadas en el almacenamiento local
-        localStorage.setItem('favourites',JSON.stringify(copyFav));
+    function handleFavouriteClick(movieName){
+        addFav(movieName);
     }
 
-    // para reflejar los cambios dentro de la interfaz al haber cambios
-    useEffect(() =>{
-        setFavourites(JSON.parse(localStorage.getItem('favourites')));
-    }, []);
-
-    console.log({ favourites });
     return <ul>
         {
             // deepcode ignore ReactMissingArrayKeys: <please specify a reason of ignoring this>
